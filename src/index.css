@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@theme {
+  --font-headline: "Outfit", sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* HSL based colors for fine-tuned control */
+  --color-background: hsl(220, 25%, 5%);
+  --color-surface: hsl(220, 25%, 7%);
+  --color-surface-container: hsl(220, 25%, 10%);
+  --color-surface-container-low: hsl(220, 25%, 8%);
+  --color-surface-container-high: hsl(220, 25%, 15%);
+  
+  --color-primary: hsl(210, 100%, 70%);
+  --color-on-primary: hsl(210, 100%, 15%);
+  --color-primary-glow: hsla(210, 100%, 70%, 0.15);
+
+  --color-secondary: hsl(140, 70%, 65%);
+  --color-on-secondary: hsl(140, 100%, 10%);
+
+  --color-tertiary: hsl(35, 100%, 65%);
+  --color-on-tertiary: hsl(35, 100%, 10%);
+
+  --color-on-surface: hsl(220, 20%, 90%);
+  --color-on-surface-variant: hsl(220, 15%, 75%);
+  --color-outline: hsl(220, 10%, 40%);
+  --color-outline-variant: hsl(220, 10%, 25%);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: var(--font-sans);
+    line-height: 1.625;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: hsla(210, 100%, 70%, 0.3);
+    color: var(--color-primary);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background-color: hsla(220, 25%, 10%, 0.6);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .glass-card {
+    background-color: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to bottom right, #ffffff, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+  }
+
+  .text-gradient-primary {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to bottom right, var(--color-primary), hsla(210, 100%, 70%, 0.8), hsla(210, 100%, 70%, 0.4));
+  }
+
+  .spotlight-hover {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spotlight-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .spotlight-hover:hover::before {
+    opacity: 1;
+  }
+
+  .blueprint-grid {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .blueprint-grid-fine {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 15px 15px;
+  }
+
+  .scanline {
+    width: 100%;
+    height: 150px;
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(162, 201, 255, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.2;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 8s linear infinite;
+  }
+}
+
+@keyframes scanline {
+  0% { bottom: 100%; }
+  100% { bottom: -150px; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsla(220, 10%, 25%, 0.5);
+  border-radius: 9999px;
+  transition: background-color 300ms;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsla(220, 10%, 40%, 0.5);
+}
